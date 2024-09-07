@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.KernelMemory.AI.OpenAI" Version="0.73.240906.1" />
+		<PackageReference Include="Microsoft.KernelMemory.Core" Version="0.73.240906.1" />
+		<PackageReference Include="Microsoft.KernelMemory.MemoryDb.Qdrant" Version="0.73.240906.1" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35209.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WahlGPT.Web", "WahlGPT.Web\WahlGPT.Web.csproj", "{19686F7A-36C3-4D9D-873C-CD64ED2E7FE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WahlGPT.Importer", "WahlGPT.Importer\WahlGPT.Importer.csproj", "{29779CBE-77F7-4439-83A5-9679043414AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WahlGPT.Function", "WahlGPT.Function\WahlGPT.Function.csproj", "{D1382E95-445E-4514-BFC9-D9E0959584D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WahlGPT.Common", "WahlGPT.Common\WahlGPT.Common.csproj", "{B93E1047-8402-49C0-BB71-A08EA51702C3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{19686F7A-36C3-4D9D-873C-CD64ED2E7FE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19686F7A-36C3-4D9D-873C-CD64ED2E7FE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19686F7A-36C3-4D9D-873C-CD64ED2E7FE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19686F7A-36C3-4D9D-873C-CD64ED2E7FE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29779CBE-77F7-4439-83A5-9679043414AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29779CBE-77F7-4439-83A5-9679043414AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29779CBE-77F7-4439-83A5-9679043414AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29779CBE-77F7-4439-83A5-9679043414AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1382E95-445E-4514-BFC9-D9E0959584D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1382E95-445E-4514-BFC9-D9E0959584D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1382E95-445E-4514-BFC9-D9E0959584D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1382E95-445E-4514-BFC9-D9E0959584D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B93E1047-8402-49C0-BB71-A08EA51702C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B93E1047-8402-49C0-BB71-A08EA51702C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B93E1047-8402-49C0-BB71-A08EA51702C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B93E1047-8402-49C0-BB71-A08EA51702C3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {39AE2A15-9338-4628-A5AB-90AC6085C151}
+	EndGlobalSection
+EndGlobal

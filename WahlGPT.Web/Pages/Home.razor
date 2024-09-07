@@ -1,0 +1,261 @@
+﻿@page "/"
+@using Microsoft.KernelMemory
+@using System.Globalization
+@inject ChatManager _chat;
+@inject IJSRuntime _js;
+
+<PageTitle>WahlGPT</PageTitle>
+
+<!-- Header -->
+<section id="header">
+	<div class="inner">
+		<span class="welcome-icon icon solid major ">👋</span>
+		<h1>
+			Willkommen zu <strong>WahlGPT</strong><br />
+		</h1>
+		<p>
+			...ein LLM das die Wahlprogramme zur Nationalratswahl 2024 <a href="#info">aller Parteien</a> gelesen hat
+			<br /> und dir Fragen dazu beantwortet.
+		</p>
+
+		<ul class="actions special">
+			<li>
+				<textarea class="question-input" type="text" placeholder="Deine Frage zu den Wahlprogrammen?"
+						  @oninput="QuestionChanged" />
+				<ul class="parties-list">
+					@foreach (var party in _parties)
+					{
+						@if (party.selected)
+						{
+							<li class="party selected" @onclick="() => SelectParty(party.party)">@party.party</li>
+						}
+						else
+						{
+							<li class="party" @onclick="() => SelectParty(party.party)">@party.party</li>
+						}
+					}
+				</ul>
+				<button class="button primary" @onclick="AskQuestion">Frage stellen!</button>
+			</li>
+		</ul>
+	</div>
+</section>
+
+<!-- One -->
+<section id="one" class="main style1">
+	<div class="container">
+		<div class="row gtr-150 answer-row">
+			<div class="col-6 col-12-medium">
+				<header class="major">
+					<h2>
+						@_question
+					</h2>
+				</header>
+				@if (_waitingForAnswer)
+				{
+					<div class="answer-loader">
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+				}
+				else
+				{
+					<p>@_answer</p>
+				}
+			</div>
+			<div class="col-6 col-12-medium imp-medium">
+				@if (_citations is not null)
+				{
+					<section class="accordion">
+						@foreach (var citation in _citations)
+						{
+								<div class="tab">
+									<input type="checkbox" name="accordion-1" id="@_sourceName">
+									<label for="@_sourceName" class="tab__label">
+										@_sourceName - 
+										Relevanz: @citation.Relevance.ToString("P", CultureInfo.InvariantCulture)
+										- zuletzt aktualisiert:
+										@citation.LastUpdate.ToString("dd'.'MM'.'yyyy", CultureInfo.InvariantCulture)
+									</label>
+									<div class="tab__content">
+										<p><i>@citation.Text</i></p>
+									</div>
+								</div>
+						}
+						
+					</section>
+				}
+				@if (!string.IsNullOrEmpty(_downloadUrl))
+				{
+					<p>
+						Wahlprogamm herunterladen: <a href="@_downloadUrl" target="_blank">
+							@_downloadUrl.Split("/").Last();
+						</a>
+					</p>
+				}
+			</div>
+		</div>
+	</div>
+	<p class="answer-info-text">
+		Diese Antwort wurde mittels Retrieval-Augmented Generation (RAG) und einem Large-Language Model (LLM) erstellt. Diese Technologien kombinieren die Fähigkeit, relevante Daten aus verschiedenen Quellen abzurufen, und mittels Textgenerierung Zusammenfassungen zu erstellen. Bitte berücksichtige, dass die Möglichkeit von Fehlern oder Ungenauigkeiten besteht.
+	</p>
+</section>
+
+<!-- Two -->
+<section id="two" class="main style2">
+	<div class="container">
+		<div class="row gtr-150">
+			<div class="col-6 col-12-medium">
+				<img src="/images/flow.png" class="flow-img" alt="WahlGPT Funktionsweise" />
+			</div>
+			<div class="col-6 col-12-medium">
+				<header class="major">
+					<h2>
+						Wie funktioniert WahlGPT?
+					</h2>
+				</header>
+				<p>Ein Large Language Model (LLM) ist ein fortschrittliches Computerprogramm, das natürliche Sprache verstehen und erzeugen kann. Wenn ein LLM mit "Retrieval-Augmented Generation" (RAG) kombiniert wird, kann es besonders nützlich sein, um spezifische Informationen aus großen Textsammlungen, wie zum Beispiel Wahlprogrammen, zu finden und zu nutzen.</p>
+				<p>
+					So funktioniert es:
+					<br />
+					<strong>Eingabe der Frage:</strong> Du stellst eine Frage zu einem Wahlprogramm, zum Beispiel: "Was sagt Partei X über Umweltschutz?" <br />
+					<strong>Informationssuche (Retrieval):</strong> Das LLM durchsucht die gespeicherten Wahlprogramme nach relevanten Textstellen, die deine Frage beantworten könnten. <br />
+					<strong>Antwortgenerierung (Augmented Generation):</strong> Das LLM verarbeitet die gefundenen Informationen und formuliert eine verständliche Antwort.
+				</p>
+				<p>Durch diese Kombination von Suche und Textgenerierung kann das LLM präzise und nützliche Antworten auf deine Fragen zu Wahlprogrammen geben. Du erhältst schnell klare Informationen, ohne die gesamten Texte selbst durchsuchen zu müssen.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Footer -->
+<section id="footer">
+	<div class="container">
+		<header class="major">
+			<h2>Support?</h2>
+		</header>
+		<p class="support-text">jede Antwort die von WahlGPT generiert wird, kostet Geld.<br/> Wenn du das Projekt unterstützen möchtest, kannst du das hier tun.
+		</p>
+		<ul class="actions special">
+			<li><a href="https://bento.me/nor0x" target="_blank" class="button wide primary">Unterstützen!</a></li>
+			<li><a href="https://github.com/nor0x/wahlgpt" target="_blank" class="button wide">Code ansehen</a></li>
+		</ul>
+	</div>
+	<ul class="icons">
+		<li>
+			<a href="https://mastodon.social/@@j0hnny" target="_blank" class="icon brands alt fa-mastodon">
+				<span class="label">Mastodon</span>
+			</a>
+		</li>
+		<li>
+			<a href="https://twitter.com/johnny_leo" target="_blank" class="icon brands alt fa-twitter">
+				<span class="label">Twitter</span>
+			</a>
+		</li>
+		<li>
+			<a href="https://github.com/nor0x" target="_blank" class="icon brands alt fa-github">
+				<span class="label">GitHub</span>
+			</a>
+		</li>
+		<li>
+			<a @onclick="CopyEmailToClipboard" class="icon solid alt fa-envelope" style="cursor:pointer;"><span class="label">Email</span></a>
+		</li>
+		<li>
+			<a href="https://bento.me/nor0x" target="_blank" class="icon solid alt fa-mug-hot">
+				<span class="label">Buy Me a Coffee</span>
+			</a>
+		</li>
+	</ul>
+	<div class="copyright">
+		<p>
+			Made with ☕ by <a href="https://johnnys.page" target="_blank">Joachim Leonfellner</a> in Vienna 🇦🇹 🇪🇺
+		</p>
+		<br />
+		<p>&copy; 2024</p>
+	</div>
+</section>
+
+@code
+{
+	private string? _question;
+	private List<Citation.Partition>? _citations;
+	private string? _sourceName;
+	private string? _downloadUrl;
+	private string? _answer;
+	private bool _waitingForAnswer;
+	List<(string party, string documentId, bool selected)> _parties = new List<(string party, string documentId, bool
+	selected)>
+	{
+	("ÖVP","oevp", false),
+	("SPÖ","spoe", false),
+	("FPÖ","fpoe", false),
+	("GRÜNE","gruene", false),
+	("NEOS","neos", false),
+	("BIER","bier", false),
+	("KEINE","wandel", false),
+	("KPÖ","kpoe", false),
+	("LMP","lmp", false)
+	};
+
+
+	private void QuestionChanged(ChangeEventArgs e)
+	{
+		_question = e?.Value?.ToString() ?? "";
+	}
+
+	private async void AskQuestion()
+	{
+		try
+		{
+			_answer = null;
+			_citations = null;
+			if (string.IsNullOrEmpty(_question))
+			{
+				return;
+			}
+			//check if a party is selected
+			if (!_parties.Any(p => p.selected))
+			{
+				return;
+			}
+
+			//enable button only if upper conditions are met
+
+			//smooth scroll to #one
+			_waitingForAnswer = true;
+			await _js.InvokeVoidAsync("scrollToElement", "#one");
+			var answer = await _chat.AskQuestion(_question, _parties.Where(p => p.selected).Select(p => p.documentId).ToList());
+			_waitingForAnswer = false;
+			if (answer is null)
+			{
+				_answer = "Sorry, ich konnte keine Antwort finden.";
+			}
+			else
+			{
+				_answer = answer.Result;
+				_sourceName = answer.RelevantSources.FirstOrDefault()?.SourceName ?? "";
+				_citations = answer.RelevantSources.FirstOrDefault().Partitions?.Take(3).ToList() ?? null;
+			}
+			StateHasChanged();
+		}
+		catch (Exception e)
+		{
+			Console.WriteLine(e);
+		}
+	}
+
+	void SelectParty(string party)
+	{
+		_parties = _parties.Select(p => (p.party, p.documentId, false)).ToList();
+		var index = _parties.FindIndex(p => p.party == party);
+		_parties[index] = (party, _parties[index].documentId, true);
+		_downloadUrl = $"https://subglobalstorage.blob.core.windows.net/wahlgpt/documents/{_parties[index].documentId}.pdf";
+		StateHasChanged();
+	}
+
+	private async void CopyEmailToClipboard()
+	{
+		await _js.InvokeVoidAsync("copyToClipboard", "hi@johnnys.page");
+	}
+}
