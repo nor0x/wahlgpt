@@ -18,6 +18,11 @@ jobs:
           dotnet-version: "8.0.x"
           dotnet-quality: "stable"
 
+      - name: Replace base-tag in index.html
+        run: |
+          sed -i 's/<base href="\/" \/>/<base href="\/wahlgpt\/" \/>/g' WahlGPT.Web/wwwroot/index.html
+
+
       - name: replace settings values with secrets
         run: |
          sed -i "s|API_ENDPOINT = \"\";|API_ENDPOINT = \"${{ secrets.API_ENDPOINT }}\";|g" WahlGPT.Common/Settings.cs  
