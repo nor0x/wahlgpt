@@ -18,17 +18,17 @@ jobs:
           dotnet-version: "8.0.x"
           dotnet-quality: "stable"
 
-	  - name: replace settings values with secrets
-		run: |
-			sed -i "s|API_ENDPOINT = \"\";|API_ENDPOINT = \"${{ secrets.API_ENDPOINT }}\";|g" WahlGPT.Common/Settings.cs  
-			# replace OPENAI_API_KEY
-			sed -i "s|OPENAI_API = \"\";|OPENAI_API = \"${{ secrets.OPENAI_API }}\";|g" WahlGPT.Common/Settings.cs
-			# replace QDRANT_HOST
-			sed -i "s|QDRANT_HOST = \"\";|QDRANT_HOST = \"${{ secrets.QDRANT_HOST }}\";|g" WahlGPT.Common/Settings.cs
-			#replace QDRANT_API_KEY
-			sed -i "s|QDRANT_API_KEY = \"\";|QDRANT_API_KEY = \"${{ secrets.QDRANT_API_KEY }}\";|g" WahlGPT.Common/Settings.cs
-			#replace BLOB_CONNECTION_STRING
-			sed -i "s|BLOB_CONNECTION_STRING = \"\";|BLOB_CONNECTION_STRING = \"${{ secrets.BLOB_CONNECTION_STRING }}\";|g" WahlGPT.Common/Settings.cs
+      - name: replace settings values with secrets
+        run: |
+         sed -i "s|API_ENDPOINT = \"\";|API_ENDPOINT = \"${{ secrets.API_ENDPOINT }}\";|g" WahlGPT.Common/Settings.cs  
+         # replace OPENAI_API_KEY
+         sed -i "s|OPENAI_API = \"\";|OPENAI_API = \"${{ secrets.OPENAI_API }}\";|g" WahlGPT.Common/Settings.cs
+         # replace QDRANT_HOST
+         sed -i "s|QDRANT_HOST = \"\";|QDRANT_HOST = \"${{ secrets.QDRANT_HOST }}\";|g" WahlGPT.Common/Settings.cs
+         #replace QDRANT_API_KEY
+         sed -i "s|QDRANT_API_KEY = \"\";|QDRANT_API_KEY = \"${{ secrets.QDRANT_API_KEY }}\";|g" WahlGPT.Common/Settings.cs
+         #replace BLOB_CONNECTION_STRING
+         sed -i "s|BLOB_CONNECTION_STRING = \"\";|BLOB_CONNECTION_STRING = \"${{ secrets.BLOB_CONNECTION_STRING }}\";|g" WahlGPT.Common/Settings.cs
 
       # publishes Blazor project to the release-folder
       - name: Publish .NET Core Project
