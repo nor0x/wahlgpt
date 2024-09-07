@@ -16,7 +16,6 @@ jobs:
       - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: "8.0.x"
-          dotnet-quality: "stable"
 
       - name: replace settings values with secrets
         run: |
