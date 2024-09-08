@@ -250,7 +250,7 @@
 		_parties = _parties.Select(p => (p.party, p.documentId, false)).ToList();
 		var index = _parties.FindIndex(p => p.party == party);
 		_parties[index] = (party, _parties[index].documentId, true);
-		_downloadUrl = $"https://subglobalstorage.blob.core.windows.net/wahlgpt/documents/{_parties[index].documentId}.pdf";
+		_downloadUrl = $"https://raw.githubusercontent.com/nor0x/wahlgpt/main/WahlGPT.Importer/Documents/{_parties[index].documentId}.pdf";
 		StateHasChanged();
 	}
 
