@@ -119,6 +119,11 @@ span:nth-child(3) {
 .tab__label {
 	justify-content: space-between;
 	padding: 1rem;
+	margin-bottom: 0;
+	background: #666666;
+	color: white;
+	border: 1px solid;
+	border-radius: 0.5rem;
 }
 
 .tab__label::after {
