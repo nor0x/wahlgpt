@@ -183,8 +183,10 @@
 			Made with ☕ by <a href="https://johnnys.page" target="_blank">Joachim Leonfellner</a> in Vienna 🇦🇹 🇪🇺
 		</p>
 		<br />
-		<p>&copy; 2024 | Version: <a href="@Settings.GetVersionUrl()">@Settings.Version</a></p>
+		<p>&copy; 2024 | Version: <a href="@Settings.GetVersionUrl()">@Settings.Version.Substring(0, 7)</a></p>
 	</div>
+	<img src="images/header-img.png" class="header-img" />
+
 </section>
 
 @code

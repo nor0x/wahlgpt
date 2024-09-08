@@ -205,6 +205,10 @@ span:nth-child(3) {
 	animation: none !important;
 }
 
+.header-img {
+	height:200px;
+}
+
 /* BLAZOR */
 
 
