@@ -1,5 +1,5 @@
-﻿using Microsoft.KernelMemory;
-using System.Text.Json;
+﻿using System.Text.Json;
+using Microsoft.KernelMemory;
 using WahlGPT.Common;
 
 namespace WahlGPT;
