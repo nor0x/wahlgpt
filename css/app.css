@@ -90,7 +90,8 @@ span:nth-child(3) {
 
 .tab__content {
 	max-height: 0;
-	overflow: hidden;
+	overflow: auto;
+	font-size: 0.9rem;
 	transition: all 0.35s;
 }
 
