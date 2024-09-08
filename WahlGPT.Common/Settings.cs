@@ -49,7 +49,7 @@ public static class Settings
 					  .WithSearchClientConfig(new SearchClientConfig
 					  {
 						  Temperature = 0.7,
-						  EmptyAnswer = "Auf diese Frage habe ich leider keine Antwort? 🤔"
+						  EmptyAnswer = "Auf diese Frage, kann ich leider keine Antwort im Wahlprogramm finden. 🤔",
 					  })
 					  .WithQdrantMemoryDb(QdrantHost, QdrantApiKey)
 					  .Build();
