@@ -23,16 +23,13 @@ jobs:
 
 
       - name: replace settings values with secrets
+        shell: pwsh
         run: |
-         sed -i "s/API_ENDPOINT/${{ secrets.API_ENDPOINT }}/g" ./WahlGPT.Common/Settings.cs
-         # replace OPENAI_API_KEY
-         sed -i "s/OPENAI_API_KEY/${{ secrets.OPENAI_API_KEY }}/g" ./WahlGPT.Common/Settings.cs
-         # replace QDRANT_HOST
-         sed -i "s/QDRANT_HOST/${{ secrets.QDRANT_HOST }}/g" ./WahlGPT.Common/Settings.cs
-         #replace QDRANT_API_KEY
-         sed -i "s/QDRANT_API_KEY/${{ secrets.QDRANT_API_KEY }}/g" ./WahlGPT.Common/Settings.cs
-         #replace BLOB_CONNECTION_STRING
-         sed -i "s/BLOB_CONNECTION_STRING/${{ secrets.BLOB_CONNECTION_STRING }}/g" ./WahlGPT.Common/Settings.cs
+         (Get-Content -Path WahlGPT.Common/Settings.cs) -replace 'API_ENDPOINT', '${{ secrets.API_ENDPOINT }}' | Set-Content -Path WahlGPT.Common/Settings.cs
+         (Get-Content -Path WahlGPT.Common/Settings.cs) -replace 'OPENAI_API_KEY', '${ { secrets.OPENAI_API_KEY }}' | Set-Content -Path WahlGPT.Common/Settings.cs
+         (Get-Content -Path WahlGPT.Common/Settings.cs) -replace 'QDRANT_HOST', '${{ secrets.QDRANT_HOST }}' | Set-Content -Path WahlGPT.Common/Settings.cs
+         (Get-Content -Path WahlGPT.Common/Settings.cs) -replace 'QDRANT_API_KEY', '${{ secrets.QDRANT_API_KEY }}' | Set-Content -Path WahlGPT.Common/Settings.cs
+         (Get-Content -Path WahlGPT.Common/Settings.cs) -replace 'BLOB_CONNECTION_STRING', '${{ secrets.BLOB_CONNECTION_STRING }}' | Set-Content -Path WahlGPT.Common/Settings.cs
 
       # publishes Blazor project to the release-folder
       - name: Publish .NET Core Project
