@@ -209,6 +209,10 @@ span:nth-child(3) {
 	height:200px;
 }
 
+.content-link-a {
+	border-bottom-color: rgb(70 70 70 / 50%);
+}
+
 /* BLAZOR */
 
 
