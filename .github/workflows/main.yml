@@ -32,6 +32,12 @@ jobs:
          (Get-Content -Path WahlGPT.Common/Settings.cs) -replace 'BLOB_CONNECTION_STRING', '${{ secrets.BLOB_CONNECTION_STRING }}' | Set-Content -Path WahlGPT.Common/Settings.cs
          (Get-Content -Path WahlGPT.Common/Settings.cs) -replace 'VERSION_HASH', '${{ github.sha }}' | Set-Content -Path WahlGPT.Common/Settings.cs 
 
+      - name: auto minify the files
+        uses: nizarmah/auto-minify@v3
+        with:
+          directory: 'WahlGPT.Web/wwwroot'
+          overwrite: true
+
       # publishes Blazor project to the release-folder
       - name: Publish .NET Core Project
         run: dotnet publish WahlGPT.Web/WahlGPT.Web.csproj -c Release -o release --nologo
