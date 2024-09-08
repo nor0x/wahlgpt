@@ -1,6 +1,8 @@
 ﻿@page "/"
 @using Microsoft.KernelMemory
 @using System.Globalization
+@using WahlGPT.Common
+
 @inject ChatManager _chat;
 @inject IJSRuntime _js;
 
@@ -181,7 +183,7 @@
 			Made with ☕ by <a href="https://johnnys.page" target="_blank">Joachim Leonfellner</a> in Vienna 🇦🇹 🇪🇺
 		</p>
 		<br />
-		<p>&copy; 2024</p>
+		<p>&copy; 2024 | Version: <a href="@Settings.GetVersionUrl()">@Settings.Version</a></p>
 	</div>
 </section>
 

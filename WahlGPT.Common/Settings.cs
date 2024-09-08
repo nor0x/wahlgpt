@@ -13,9 +13,14 @@ public static class Settings
 	public const string QdrantHost = "QDRANT_HOST";
 	public const string QdrantApiKey = "QDRANT_API_KEY";
 	public const string BlobConnectionString = "BLOB_CONNECTION_STRING";
+	public const string Version = "VERSION_HASH";
 
 	static IKernelMemory? _kernelMemory;
 
+	public static string GetVersionUrl()
+	{
+		return "https://github.com/nor0x/wahlgpt/commit/" + Version;
+	}
 
 	public static IKernelMemory BuildKernelMemory()
 	{
