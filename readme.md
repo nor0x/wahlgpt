@@ -1,7 +1,8 @@
 # WahlGPT
 LLM + RAG to generate answers about the program of the parties for the 2024 Austrian legislative election.
 
-#credits
+
+## credits
 - html5up
 - openai
 - qdrant

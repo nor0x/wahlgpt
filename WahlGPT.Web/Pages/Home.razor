@@ -80,8 +80,8 @@
 						@foreach (var citation in _citations)
 						{
 								<div class="tab">
-									<input type="checkbox" name="accordion-1" id="@_sourceName">
-									<label for="@_sourceName" class="tab__label">
+									<input type="checkbox" name="accordion-1" id="part-@citation.Relevance">
+								<label for="part-@citation.Relevance" class="tab__label">
 										@_sourceName - 
 										Relevanz: @citation.Relevance.ToString("P", CultureInfo.InvariantCulture)
 										- zuletzt aktualisiert:
