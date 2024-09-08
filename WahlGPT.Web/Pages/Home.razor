@@ -15,7 +15,7 @@
 			<div class="beta-badge">βeta</div>
 		</h1>
 		<p>
-			...ein LLM das die Wahlprogramme zur Nationalratswahl 2024 <a href="#info">aller Parteien</a> gelesen hat
+			...ein LLM das die Wahlprogramme zur Nationalratswahl 2024 <a href="https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2024/start.aspx#pk_02" target="_blank">aller Parteien</a> gelesen hat
 			<br /> und dir Fragen dazu beantwortet.
 		</p>
 
@@ -36,7 +36,7 @@
 						}
 					}
 				</ul>
-				<button class="button primary" @onclick="AskQuestion">Frage stellen!</button>
+				<button class="button primary" @onclick="AskQuestion" disabled="@_buttonDisabled">Frage stellen!</button>
 			</li>
 		</ul>
 	</div>
@@ -50,6 +50,9 @@
 				<header class="major">
 					<h2>
 						@_question
+						<span class="selected-party-badge">
+							@_parties.FirstOrDefault(p => p.selected).party
+						</span>
 					</h2>
 				</header>
 				@if (_waitingForAnswer)
@@ -190,24 +193,27 @@
 	private string? _downloadUrl;
 	private string? _answer;
 	private bool _waitingForAnswer;
-	List<(string party, string documentId, bool selected)> _parties = new List<(string party, string documentId, bool
-	selected)>
+	private bool _buttonDisabled = true;
+	List<(string party, string documentId, bool selected, int order)> _parties = new List<(string party, string documentId, bool
+	selected, int order)>
 	{
-	("ÖVP","oevp", false),
-	("SPÖ","spoe", false),
-	("FPÖ","fpoe", false),
-	("GRÜNE","gruene", false),
-	("NEOS","neos", false),
-	("BIER","bier", false),
-	("KEINE","wandel", false),
-	("KPÖ","kpoe", false),
-	("LMP","lmp", false)
+	("ÖVP","oevp", false, 0),
+	("SPÖ","spoe", false, 1),
+	("FPÖ","fpoe", false, 2),
+	("GRÜNE","gruene", false, 3),
+	("NEOS","neos", false, 4),
+	("BIER","bier", false, 5),
+	("KEINE","wandel", false, 6),
+	("KPÖ","kpoe", false, 7),
+	("LMP","lmp", false, 8)
 	};
 
 
 	private void QuestionChanged(ChangeEventArgs e)
 	{
 		_question = e?.Value?.ToString() ?? "";
+		_buttonDisabled = string.IsNullOrEmpty(_question) || !_parties.Any(p => p.selected);
+		StateHasChanged();
 	}
 
 	private async void AskQuestion()
@@ -253,10 +259,12 @@
 
 	void SelectParty(string party)
 	{
-		_parties = _parties.Select(p => (p.party, p.documentId, false)).ToList();
+		_parties = _parties.Select(p => (p.party, p.documentId, false, p.order)).ToList();
 		var index = _parties.FindIndex(p => p.party == party);
-		_parties[index] = (party, _parties[index].documentId, true);
+		_parties[index] = (party, _parties[index].documentId, true, _parties[index].order);
 		_downloadUrl = $"https://raw.githubusercontent.com/nor0x/wahlgpt/main/WahlGPT.Importer/Documents/{_parties[index].documentId}.pdf";
+		
+		_buttonDisabled = string.IsNullOrEmpty(_question) || !_parties.Any(p => p.selected);
 		StateHasChanged();
 	}
 
