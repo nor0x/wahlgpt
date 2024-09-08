@@ -23,7 +23,7 @@
 
 		<ul class="actions special">
 			<li>
-				<textarea class="question-input" type="text" placeholder="Deine Frage zu den Wahlprogrammen?"
+				<textarea class="question-input" type="text" placeholder="Deine Frage zum Wahlprogramm?"
 						  @oninput="QuestionChanged" />
 				<ul class="parties-list">
 					@foreach (var party in _parties)
@@ -135,6 +135,7 @@
 					<strong>Antwortgenerierung (Augmented Generation):</strong> Das LLM verarbeitet die gefundenen Informationen und formuliert eine verständliche Antwort.
 				</p>
 				<p>Durch diese Kombination von Suche und Textgenerierung kann das LLM präzise und nützliche Antworten auf deine Fragen zu Wahlprogrammen geben. Du erhältst schnell klare Informationen, ohne die gesamten Texte selbst durchsuchen zu müssen.</p>
+				<p>der Code von WahlGPT ist open-source und auf <strong><a class="content-link-a" href="https://github.com/nor0x/wahlgpt" target="_blank">GitHub</a></strong> verfügbar.</p>
 			</div>
 		</div>
 	</div>
