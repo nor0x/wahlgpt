@@ -177,6 +177,18 @@ span:nth-child(3) {
 	line-height: normal;
 }
 
+.beta-badge {
+	color: #b01313;
+	background-color: #dfd3d3;
+	padding: 0 1rem;
+	border-radius: 0.5rem;
+	font-size: 27px;
+	font-weight: 700;
+	transform: rotate(-24deg);
+	animation: none !important;
+	display: inline-block;
+}
+
 /* BLAZOR */
 
 
@@ -265,5 +277,10 @@ code {
 	.flow-img {
 		margin-top: 0;
 		margin-bottom: 1rem;
+	}
+
+
+	.beta-badge {
+		transform: rotate(-9deg);
 	}
 }
