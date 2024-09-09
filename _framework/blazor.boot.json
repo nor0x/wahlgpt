@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "WahlGPT.Web",
   "resources": {
-    "hash": "sha256-N/6fRQ9VWnbBTZ2dSEWCoZf9iFt3DSSeok4p18q5ez0=",
+    "hash": "sha256-yEdBWMgZi5MgVK4IvIo+C+FyiJQ0k1UK6shjizC3WV8=",
     "jsModuleNative": {
       "dotnet.native.8.0.8.746giovk6l.js": "sha256-juC5sA7gHTLXFEhAKgdM2/RavswpwCtDfjYGsAz2FXg="
     },
@@ -242,8 +242,8 @@
       "UglyToad.PdfPig.Tokenization.wasm": "sha256-LMC6R4XWgh5YLTYKlvSp2Kt07e2O5EO+bDRpIT5UgVs=",
       "UglyToad.PdfPig.Tokens.wasm": "sha256-NbalX5Kl7mNk2/CKnOlNNPpVwF5vaiItcF0u68qUg7o=",
       "UglyToad.PdfPig.wasm": "sha256-9F2l4lNMY3JtodzYDUwb3Pqka91mc/bEcz9RXWDhRUk=",
-      "WahlGPT.Common.wasm": "sha256-kvbRNZaunAjdkpud2egD5COfi8nuhV32hG8zSqxQvHc=",
-      "WahlGPT.Web.wasm": "sha256-1e4kkWDu0yWe2LWtoyd1fNj6OUKZ5NM2C0pomfpNX4k=",
+      "WahlGPT.Common.wasm": "sha256-/TrSQfN04zgeV0M4zTevpNlGUKMekXq9jlu6OWNVchE=",
+      "WahlGPT.Web.wasm": "sha256-HtcagFHS2v4xGF5YDFn0UPjWIBbv4XEVwzPrLLsbKZY=",
       "XLParser.wasm": "sha256-y9+iO5oW0od7XYaYhNN0cqGSKMAoLRD+xcX4uzqpF0U=",
       "ZstdSharp.wasm": "sha256-6zV+YbXzfrxvRSjRkWKbqb3yS2VRZmz1dhjJaTWjkOg="
     },
