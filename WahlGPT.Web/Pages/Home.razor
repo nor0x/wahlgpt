@@ -47,44 +47,49 @@
 <!-- One -->
 <section id="one" class="main style1">
 	<div class="container">
-		<div class="row gtr-150 answer-row">
-			<div class="col-6 col-12-medium">
-				<header class="major">
-					<h2>
-						@_question
-						<span class="selected-party-badge">
-							@_parties.FirstOrDefault(p => p.selected).party
-						</span>
-					</h2>
-				</header>
-				@if (_waitingForAnswer)
-				{
-					<div class="answer-loader">
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-				}
-				else
-				{
-					<p>@((MarkupString)ChatManager.ConvertToHtml(_answer))</p>
-				}
+			<header class="major">
+				<h2>
+					@_question
+				</h2>
+			</header>
+		@if (_waitingForAnswer)
+		{
+			<div class="answer-loader">
+				<span></span>
+				<span></span>
+				<span></span>
 			</div>
-			<div class="col-6 col-12-medium imp-medium">
-				<header class="major">
-					<h2>
-						Quellen:
-					</h2>
-				</header>
-				@if (_citations is not null)
+		}
+		<div class="row gtr-150 answer-row">
+			@if (_answers is not null)
+			{
+
+				@foreach (var answer in _answers.OrderByDescending(a => _parties.First(p => p.party == a.party).order))
 				{
-					<section class="accordion">
-						@foreach (var citation in _citations)
+
+					<div class="col-6 col-12-medium">
+						<span class="selected-party-badge">
+							@answer.party
+						</span>
+						<p>@((MarkupString)ChatManager.ConvertToHtml(answer.answer))</p>
+						<div class="answer-spacer"></div>
+					</div>
+					<div class="col-6 col-12-medium imp-medium">
+						<header class="major">
+							<h3>
+								Quellen:
+							</h3>
+						</header>
+						@if (answer.source?.Partitions is not null)
 						{
+						<section class="accordion">
+
+							@foreach (var citation in answer.source.Partitions.Take(3))
+							{
 								<div class="tab">
 									<input type="checkbox" name="accordion-1" id="part-@citation.Relevance">
-								<label for="part-@citation.Relevance" class="tab__label">
-										@_sourceName - 
+									<label for="part-@citation.Relevance" class="tab__label">
+										@(answer.party.ToLower() + ".pdf") -
 										Relevanz: @citation.Relevance.ToString("P", CultureInfo.InvariantCulture)
 										- zuletzt aktualisiert:
 										@citation.LastUpdate.ToString("dd'.'MM'.'yyyy", CultureInfo.InvariantCulture)
@@ -93,23 +98,32 @@
 										<p><i>@citation.Text</i></p>
 									</div>
 								</div>
-						}
+							}
 						
-					</section>
+						</section>
+						}
+						else
+						{
+							<p>Keine Quellen gefunden.</p>
+						}
+
+
+
+						@if (!string.IsNullOrEmpty(_downloadUrl))
+						{
+							<p>
+								Wahlprogamm herunterladen: <a href="@GetDownloadUrl(answer.party)" target="_blank">
+									@GetDownloadUrl(answer.party).Split("/").LastOrDefault()
+								</a>
+							</p>
+						}
+					</div>
 				}
-				@if (!string.IsNullOrEmpty(_downloadUrl))
-				{
-					<p>
-						Wahlprogamm herunterladen: <a href="@_downloadUrl" target="_blank">
-							@_downloadUrl.Split("/").Last();
-						</a>
-					</p>
-				}
-			</div>
+			}
 		</div>
 	</div>
 	<p class="answer-info-text">
-		Diese Antwort wurde mittels Retrieval-Augmented Generation (RAG) und einem Large-Language Model (LLM) erstellt. Diese Technologien kombinieren die Fähigkeit, relevante Daten aus verschiedenen Quellen abzurufen, und mittels Textgenerierung Zusammenfassungen zu erstellen. Bitte berücksichtige, dass die Möglichkeit von Fehlern oder Ungenauigkeiten besteht.
+		Diese Antworten wurde mittels Retrieval-Augmented Generation (RAG) und einem Large-Language Model (LLM) erstellt. Diese Technologien kombinieren die Fähigkeit, relevante Daten aus verschiedenen Quellen abzurufen, und mittels Textgenerierung Zusammenfassungen zu erstellen. Bitte berücksichtige, dass die Möglichkeit von Fehlern oder Ungenauigkeiten besteht.
 	</p>
 </section>
 
@@ -135,7 +149,7 @@
 					<strong>Antwortgenerierung (Augmented Generation):</strong> Das LLM verarbeitet die gefundenen Informationen und formuliert eine verständliche Antwort.
 				</p>
 				<p>Durch diese Kombination von Suche und Textgenerierung kann das LLM präzise und nützliche Antworten auf deine Fragen zu Wahlprogrammen geben. Du erhältst schnell klare Informationen, ohne die gesamten Texte selbst durchsuchen zu müssen.</p>
-				<p>der Code von WahlGPT ist open-source und auf <strong><a class="content-link-a" href="https://github.com/nor0x/wahlgpt" target="_blank">GitHub</a></strong> verfügbar.</p>
+				<p>der Code von WahlGPT ist open-source und auf <strong><a class="content-link-a" href="https://github.com/nor0x/wahlgpt" target="_blank">GitHub</a></strong> verfügbar. Dort können auch alle <a class="content-link-a" href="https://github.com/nor0x/wahlgpt/tree/main/WahlGPT.Importer/Documents">Wahlprogramme</a> die als Import verwendet heruntergeladen werden.</p>
 			</div>
 		</div>
 	</div>
@@ -147,7 +161,8 @@
 		<header class="major">
 			<h2>Support?</h2>
 		</header>
-		<p class="support-text">jede Antwort die von WahlGPT generiert wird, kostet Geld.<br/> Wenn du das Projekt unterstützen möchtest, kannst du das hier tun.
+		<p class="support-text">
+			jede Antwort die von WahlGPT generiert wird, kostet Geld.<br /> Wenn du das Projekt unterstützen möchtest, kannst du das hier tun.
 		</p>
 		<ul class="actions special">
 			<li><a href="https://bento.me/nor0x" target="_blank" class="button wide primary">Unterstützen!</a></li>
@@ -193,10 +208,8 @@
 @code
 {
 	private string? _question;
-	private List<Citation.Partition>? _citations;
-	private string? _sourceName;
 	private string? _downloadUrl;
-	private string? _answer;
+	private List<(string answer, string party, Citation source)> _answers;
 	private bool _waitingForAnswer;
 	private bool _buttonDisabled = true;
 	List<(string party, string documentId, bool selected, int order)> _parties = new List<(string party, string documentId, bool
@@ -225,35 +238,35 @@
 	{
 		try
 		{
-			_answer = null;
-			_citations = null;
+			_answers = new();
 			if (string.IsNullOrEmpty(_question))
 			{
 				return;
 			}
-			//check if a party is selected
 			if (!_parties.Any(p => p.selected))
 			{
 				return;
 			}
-
-			//enable button only if upper conditions are met
-
-			//smooth scroll to #one
 			_waitingForAnswer = true;
 			await _js.InvokeVoidAsync("scrollToElement", "#one");
-			var answer = await _chat.AskQuestion(_question, _parties.Where(p => p.selected).Select(p => p.documentId).ToList());
+			foreach (var p in _parties.Where(p => p.selected))
+			{
+				var answer = await _chat.AskQuestion(_question, new List<string> { p.documentId });
+				if (answer is null)
+				{
+					_answers.Add(("Sorry, ich konnte keine Antwort finden.", p.party, null));
+				}
+				else
+				{
+					_answers.Add((answer.Result, p.party, answer.RelevantSources.FirstOrDefault()));
+				}
+
+				_answers = _answers.OrderBy(a => _parties.First(p => p.party == a.party).order).ToList();
+				StateHasChanged();
+
+			}
+
 			_waitingForAnswer = false;
-			if (answer is null)
-			{
-				_answer = "Sorry, ich konnte keine Antwort finden.";
-			}
-			else
-			{
-				_answer = answer.Result;
-				_sourceName = answer.RelevantSources.FirstOrDefault()?.SourceName ?? "";
-				_citations = answer.RelevantSources.FirstOrDefault().Partitions?.Take(3).ToList() ?? null;
-			}
 			StateHasChanged();
 		}
 		catch (Exception e)
@@ -264,13 +277,16 @@
 
 	void SelectParty(string party)
 	{
-		_parties = _parties.Select(p => (p.party, p.documentId, false, p.order)).ToList();
-		var index = _parties.FindIndex(p => p.party == party);
-		_parties[index] = (party, _parties[index].documentId, true, _parties[index].order);
-		_downloadUrl = $"https://raw.githubusercontent.com/nor0x/wahlgpt/main/WahlGPT.Importer/Documents/{_parties[index].documentId}.pdf";
-		
+		_parties = _parties.Select(p => p.party == party ? (p.party, p.documentId, !p.selected, p.order) : p).ToList();
+
 		_buttonDisabled = string.IsNullOrEmpty(_question) || !_parties.Any(p => p.selected);
 		StateHasChanged();
+	}
+
+	string GetDownloadUrl(string party)
+	{
+		var documentId = _parties.First(p => p.party == party).documentId;
+		return $"https://raw.githubusercontent.com/nor0x/wahlgpt/main/WahlGPT.Importer/Documents/{documentId}.pdf";
 	}
 
 	private async void CopyEmailToClipboard()

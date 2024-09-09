@@ -41,11 +41,19 @@ public static class Settings
 					TextModel = TextModel,
 				};
 
+				var azureBlobStorageConfig = new AzureBlobsConfig
+				{
+					Auth = AzureBlobsConfig.AuthTypes.ConnectionString,
+					ConnectionString = BlobConnectionString,
+					Container = "wahlgpt"
+				};
+
 #pragma warning disable KMEXP00 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 				var kernelMemory = new KernelMemoryBuilder()
 					.WithContentDecoder(new TextDecoder())
 					  .WithOpenAITextEmbeddingGeneration(embeddingConfig)
 					  .WithOpenAITextGeneration(generationConfig)
+					  .WithAzureBlobsDocumentStorage(azureBlobStorageConfig)
 					  .WithSearchClientConfig(new SearchClientConfig
 					  {
 						  Temperature = 0.7,
