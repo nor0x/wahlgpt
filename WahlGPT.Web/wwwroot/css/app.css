@@ -3,7 +3,7 @@
 	width: 400px;
 	max-width: 95%;
 	margin: 0 auto;
-	height: 250px;
+	height: 170px;
 	margin-bottom: 12px;
 	color: #666666;
 }
@@ -178,7 +178,7 @@ span:nth-child(3) {
 .answer-info-text {
 	font-size: 0.8rem;
 	text-align: center;
-	max-width: 60%;
+	max-width: 50%;
 	margin: 0 auto;
 	line-height: normal;
 }
@@ -211,6 +211,16 @@ span:nth-child(3) {
 
 .content-link-a {
 	border-bottom-color: rgb(70 70 70 / 50%);
+}
+
+.answer-row {
+	flex-wrap: wrap-reverse;
+}
+
+.support-text {
+	max-width: 50%;
+	margin: 0 auto;
+	margin-bottom: 2rem;
 }
 
 /* BLAZOR */
@@ -294,10 +304,6 @@ code {
 		width: 100px !important;
 	}
 
-	.answer-row {
-		flex-wrap: wrap-reverse;
-	}
-
 	.flow-img {
 		margin-top: 0;
 		margin-bottom: 1rem;
@@ -310,5 +316,8 @@ code {
 
 	.answer-info-text {
 		max-width: 80%;
+	}
+	.support-text {
+		max-width: 100%;
 	}
 }
