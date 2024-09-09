@@ -35,7 +35,6 @@ public class ChatManager
 			var result = await response.Content.ReadAsStringAsync();
 			var memoryAnswer = new MyMemoryAnswer();
 			memoryAnswer = memoryAnswer.FromJson(result);
-			Console.WriteLine(memoryAnswer);
 			return memoryAnswer;
 		}
 		catch (Exception ex)

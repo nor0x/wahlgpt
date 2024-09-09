@@ -47,11 +47,11 @@
 <!-- One -->
 <section id="one" class="main style1">
 	<div class="container">
-			<header class="major">
-				<h2>
-					@_question
-				</h2>
-			</header>
+		<header class="major">
+			<h2>
+				@_question
+			</h2>
+		</header>
 		@if (_waitingForAnswer)
 		{
 			<div class="answer-loader">
@@ -82,41 +82,36 @@
 						</header>
 						@if (answer.source?.Partitions is not null)
 						{
-						<section class="accordion">
+							<section class="accordion">
 
-							@foreach (var citation in answer.source.Partitions.Take(3))
-							{
-								<div class="tab">
-									<input type="checkbox" name="accordion-1" id="part-@citation.Relevance">
-									<label for="part-@citation.Relevance" class="tab__label">
-										@(answer.party.ToLower() + ".pdf") -
-										Relevanz: @citation.Relevance.ToString("P", CultureInfo.InvariantCulture)
-										- zuletzt aktualisiert:
-										@citation.LastUpdate.ToString("dd'.'MM'.'yyyy", CultureInfo.InvariantCulture)
-									</label>
-									<div class="tab__content">
-										<p><i>@citation.Text</i></p>
+								@foreach (var citation in answer.source.Partitions.Take(3))
+								{
+									<div class="tab">
+										<input type="checkbox" name="accordion-1" id="part-@citation.Relevance">
+										<label for="part-@citation.Relevance" class="tab__label">
+											@(answer.party.ToLower() + ".pdf") -
+											Relevanz: @citation.Relevance.ToString("P", CultureInfo.InvariantCulture)
+											- zuletzt aktualisiert:
+											@citation.LastUpdate.ToString("dd'.'MM'.'yyyy", CultureInfo.InvariantCulture)
+										</label>
+										<div class="tab__content">
+											<p><i>@citation.Text</i></p>
+										</div>
 									</div>
-								</div>
-							}
-						
-						</section>
+								}
+
+							</section>
 						}
 						else
 						{
 							<p>Keine Quellen gefunden.</p>
 						}
 
-
-
-						@if (!string.IsNullOrEmpty(_downloadUrl))
-						{
-							<p>
-								Wahlprogamm herunterladen: <a href="@GetDownloadUrl(answer.party)" target="_blank">
-									@GetDownloadUrl(answer.party).Split("/").LastOrDefault()
-								</a>
-							</p>
-						}
+						<p>
+							Wahlprogamm herunterladen: <a href="@GetDownloadUrl(answer.party)" target="_blank">
+								@GetDownloadUrl(answer.party).Split("/").LastOrDefault()
+							</a>
+						</p>
 					</div>
 				}
 			}
