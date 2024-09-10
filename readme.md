@@ -10,6 +10,8 @@
 
 **LLM + RAG to generate answers about the program of the parties for the 2024 Austrian legislative election.**
 
+as described in the blog post: [https://johnnys.news/2024/09/How-I-built-wahlGPT](https://johnnys.news/2024/09/How-I-built-wahlGPT)
+
 
 # Dependencies
 - .NET SDK >= 8
