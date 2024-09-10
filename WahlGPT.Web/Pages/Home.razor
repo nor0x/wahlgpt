@@ -226,6 +226,14 @@
 	};
 
 
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if(firstRender)
+		{
+			await _js.InvokeVoidAsync("doSuggestions");
+		}
+	}
+
 	private void QuestionChanged(ChangeEventArgs e)
 	{
 		_question = e?.Value?.ToString() ?? "";
@@ -237,6 +245,11 @@
 	{
 		try
 		{
+			var question = _question;
+			if(string.IsNullOrEmpty(question))
+			{
+				return;
+			}
 			if (_timer is null)
 			{
 				_countDown = 10;
@@ -247,7 +260,7 @@
 				return;
 			}
 			_answers = new();
-			if (string.IsNullOrEmpty(_question))
+			if (string.IsNullOrEmpty(question))
 			{
 				return;
 			}
@@ -271,7 +284,7 @@
 			await _js.InvokeVoidAsync("scrollToElement", "#one");
 			foreach (var p in _parties.Where(p => p.selected))
 			{
-				var answer = await _chat.AskQuestion(_question, new List<string> { p.documentId });
+				var answer = await _chat.AskQuestion(question, new List<string> { p.documentId });
 				if (answer is null)
 				{
 					_answers.Add(("Sorry, ich konnte keine Antwort finden.", p.party, null));
