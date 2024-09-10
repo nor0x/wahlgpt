@@ -38,7 +38,7 @@
 						}
 					}
 				</ul>
-				<button class="button primary" @onclick="AskQuestion" disabled="@_buttonDisabled">Frage stellen!</button>
+				<button class="button primary" @onclick="AskQuestion" disabled="@_buttonDisabled">@_questionButtonText</button>
 			</li>
 		</ul>
 	</div>
@@ -203,10 +203,13 @@
 @code
 {
 	private string? _question;
-	private string? _downloadUrl;
-	private List<(string answer, string party, Citation source)> _answers;
+	private string? _questionButtonText = "Frage stellen";
 	private bool _waitingForAnswer;
 	private bool _buttonDisabled = true;
+	Timer? _timer;
+	int _countDown;
+
+	private List<(string answer, string party, Citation? source)>? _answers;
 	List<(string party, string documentId, bool selected, int order)> _parties = new List<(string party, string documentId, bool
 	selected, int order)>
 	{
@@ -233,6 +236,15 @@
 	{
 		try
 		{
+			if (_timer is null)
+			{
+				_countDown = 10;
+			}
+
+			if (_countDown > 0 && _timer is not null)
+			{
+				return;
+			}
 			_answers = new();
 			if (string.IsNullOrEmpty(_question))
 			{
@@ -242,6 +254,18 @@
 			{
 				return;
 			}
+			_timer = new Timer(_ =>
+				{
+					_countDown--;
+					_questionButtonText = _countDown > 0 ? $"nächste Frage in {_countDown} Sekunden" : "Frage stellen";
+					StateHasChanged();
+					if(_countDown <= 0)
+					{
+						_timer?.Dispose();
+						_timer = null;
+					}
+
+				}, null, 0, 1000);
 			_waitingForAnswer = true;
 			await _js.InvokeVoidAsync("scrollToElement", "#one");
 			foreach (var p in _parties.Where(p => p.selected))

@@ -212,7 +212,7 @@ a {
 
 a:hover {
 	border-bottom-color: transparent !important;
-	color: #6bd4c8;
+	color: #b01313;
 }
 
 strong,
@@ -2218,7 +2218,7 @@ input[type="password"]:focus,
 input[type="email"]:focus,
 select:focus,
 textarea:focus {
-	border-color: #6bd4c8;
+	border-color: #b01313;
 }
 
 select {
@@ -2317,7 +2317,7 @@ input[type="radio"]:checked+label:before {
 }
 
 input[type="radio"]:focus+label:before {
-	border-color: #6bd4c8;
+	border-color: #b01313;
 }
 
 
@@ -2413,7 +2413,7 @@ input[type="radio"]+label:before {
 }
 
 .icon.style3:before {
-	color: #6bd4c8;
+	color: #b01313;
 }
 
 .icon.style4:before {

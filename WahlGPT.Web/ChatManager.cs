@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Components;
 using Microsoft.KernelMemory;
 using WahlGPT.Common;
 
@@ -7,19 +8,31 @@ namespace WahlGPT;
 
 public class ChatManager
 {
+	public Dictionary<string, string> _questionCache = new();
 	public ChatManager(HttpClient client)
 	{
 		_client = client;
 	}
 
 	readonly HttpClient _client;
-	readonly string _loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
-	public async Task<MyMemoryAnswer?> AskQuestion(string question, List<string> documentIds = null)
+	public async Task<MyMemoryAnswer?> AskQuestion(string question, List<string> documentIds)
 	{
 		try
 		{
-			var docIds = documentIds != null ? string.Join(",", documentIds) : "";
+			foreach (var docId in documentIds)
+			{
+				var key = $"{docId}_{question.ToLowerInvariant()}";
+				if (_questionCache.ContainsKey(key))
+				{
+					var answer = _questionCache[key];
+					var cachedAnswer = new MyMemoryAnswer();
+					cachedAnswer = cachedAnswer.FromJson(answer);
+					return cachedAnswer;
+				}
+			}
+
+			var docIds = string.Join(",", documentIds);
 			var request = new HttpRequestMessage();
 			request.RequestUri = new Uri(Settings.ApiEndpoint);
 			request.Method = HttpMethod.Post;
@@ -35,6 +48,13 @@ public class ChatManager
 			var result = await response.Content.ReadAsStringAsync();
 			var memoryAnswer = new MyMemoryAnswer();
 			memoryAnswer = memoryAnswer.FromJson(result);
+
+			foreach (var docId in documentIds)
+			{
+				var key = $"{docId}_{question.ToLowerInvariant()}";
+				_questionCache[key] = result;
+			}
+
 			return memoryAnswer;
 		}
 		catch (Exception ex)
