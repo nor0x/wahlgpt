@@ -9,7 +9,7 @@ public static class Settings
 	public const string ApiEndpoint = "API_ENDPOINT";
 	public const string OpenAiApiKey = "OPENAI_API_KEY";
 	public const string EmbeddingModel = "text-embedding-3-small";
-	public const string TextModel = "gpt-4o";
+	public const string TextModel = "gpt-4o-mini";
 	public const string QdrantHost = "QDRANT_HOST";
 	public const string QdrantApiKey = "QDRANT_API_KEY";
 	public const string BlobConnectionString = "BLOB_CONNECTION_STRING";
