@@ -17,8 +17,8 @@ try
 		var documentId = Path.GetFileNameWithoutExtension(file);
 		var importResult = await _kernelMemory.ImportDocumentAsync(file, documentId: documentId);
 		Console.WriteLine("imported " + file);
-		var docstatus = _kernelMemory.GetDocumentStatusAsync(documentId);
-		Console.WriteLine("completed: " + docstatus.Result.Completed + " failed: " + docstatus.Result.Failed);
+		var docstatus = await _kernelMemory.GetDocumentStatusAsync(documentId);
+		Console.WriteLine("completed: " + docstatus.Completed + " failed: " + docstatus.Failed);
 	}
 
 	Console.WriteLine("importing done");
