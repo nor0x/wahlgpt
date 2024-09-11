@@ -16,9 +16,10 @@
 			Willkommen zu <strong>WahlGPT</strong>
 			<div class="beta-badge">βeta</div>
 		</h1>
+		<p class="header-info-text">...ein LLM das die Wahlprogramme zur Nationalratswahl 2024 <a href="https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2024/start.aspx#pk_02" target="_blank">aller Parteien</a> gelesen hat und dir Fragen dazu beantwortet.
+		</p>
 		<p>
-			...ein LLM das die Wahlprogramme zur Nationalratswahl 2024 <a href="https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2024/start.aspx#pk_02" target="_blank">aller Parteien</a> gelesen hat
-			<br /> und dir Fragen dazu beantwortet.
+			bisher <span data-countup> @_answerCount</span> Antworten generiert
 		</p>
 
 		<ul class="actions special">
@@ -208,6 +209,7 @@
 	private string? _questionButtonText = "Frage stellen";
 	private bool _waitingForAnswer;
 	private bool _buttonDisabled = true;
+	int _answerCount = 12345;
 	Timer? _timer;
 	int _countDown;
 
@@ -232,6 +234,11 @@
 		if(firstRender)
 		{
 			await _js.InvokeVoidAsync("doSuggestions");
+			await Task.Run(async () =>
+			{
+				_answerCount = await _chat.GetCount();
+				await _js.InvokeVoidAsync("doCountUp", _answerCount);
+			});
 		}
 	}
 

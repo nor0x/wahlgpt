@@ -1,20 +1,49 @@
 ﻿using System.Text.Json;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using Microsoft.KernelMemory;
 using WahlGPT.Common;
+using static System.Net.WebRequestMethods;
 
 namespace WahlGPT;
 
 public class ChatManager
 {
 	public Dictionary<string, string> _questionCache = new();
-	public ChatManager(HttpClient client)
+	public ChatManager(HttpClient client, IJSRuntime jsRuntime)
 	{
 		_client = client;
+		_jsRuntime = jsRuntime;
 	}
 
+
 	readonly HttpClient _client;
+	readonly IJSRuntime _jsRuntime;
+
+	public async Task<int> GetCount()
+	{
+		var lastDate = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "countDate");
+		if (!string.IsNullOrWhiteSpace(lastDate))
+		{
+			var lastDateTime = DateTime.Parse(lastDate);
+			if (DateTime.Now.Subtract(lastDateTime).TotalMinutes < 10)
+			{
+				var lastCount = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "count");
+				if (!string.IsNullOrWhiteSpace(lastCount))
+				{
+					var minutes = DateTime.Now.Subtract(lastDateTime).TotalMinutes;
+					var estimatedCount = (int)(minutes * 10) + int.Parse(lastCount);
+					return estimatedCount;
+				}
+			}
+		}
+
+		var countString = await _client.GetStringAsync(Settings.CountUrl);
+		await _jsRuntime.InvokeVoidAsync("localStorage.setItem", "count", countString);
+		await _jsRuntime.InvokeVoidAsync("localStorage.setItem", "countDate", DateTime.Now.ToString());
+		return int.Parse(countString);
+	}
 
 	public async Task<MyMemoryAnswer?> AskQuestion(string question, List<string> documentIds)
 	{

@@ -60,3 +60,46 @@ let typeWriter = function (element, text, i) {
 		}, Math.floor(Math.random() * 90) + 10);
 	}
 }
+
+window.doCountUp = function (count) {
+
+	const els = document.querySelectorAll('[data-countup]');
+
+	els.forEach(el => {
+		el.textContent = count;
+	});
+	els.forEach(makeCountup);
+}
+
+
+
+function countup(el, target) {
+	let data = { count: 0 };
+	anime({
+		targets: data,
+		count: [0, target],
+		duration: 5000,
+		round: 1,
+		delay: 200,
+		easing: 'easeOutCubic',
+		update() {
+			el.innerText = data.count.toLocaleString();
+		}
+	});
+}
+
+function makeCountup(el) {
+	const text = el.textContent;
+	const target = parseInt(text, 10);
+
+	const io = new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			if (entry.intersectionRatio > 0) {
+				countup(el, target);
+				io.unobserve(entry.target);
+			}
+		});
+	});
+
+	io.observe(el);
+}

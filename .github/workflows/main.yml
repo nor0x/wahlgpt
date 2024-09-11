@@ -30,6 +30,7 @@ jobs:
          (Get-Content -Path WahlGPT.Common/Settings.cs) -replace 'QDRANT_HOST', '${{ secrets.QDRANT_HOST }}' | Set-Content -Path WahlGPT.Common/Settings.cs
          (Get-Content -Path WahlGPT.Common/Settings.cs) -replace 'QDRANT_API_KEY', '${{ secrets.QDRANT_API_KEY }}' | Set-Content -Path WahlGPT.Common/Settings.cs
          (Get-Content -Path WahlGPT.Common/Settings.cs) -replace 'BLOB_CONNECTION_STRING', '${{ secrets.BLOB_CONNECTION_STRING }}' | Set-Content -Path WahlGPT.Common/Settings.cs
+         (Get-Content -Path WahlGPT.Common/Settings.cs) -replace 'COUNT_ENDPOINT', '${{ secrets.COUNT_ENDPOINT }}' | Set-Content -Path WahlGPT.Common/Settings.cs
          (Get-Content -Path WahlGPT.Common/Settings.cs) -replace 'VERSION_HASH', '${{ github.sha }}' | Set-Content -Path WahlGPT.Common/Settings.cs 
 
       - name: auto minify the files

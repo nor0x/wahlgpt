@@ -238,6 +238,12 @@ span:nth-child(3) {
 	margin-bottom: 2rem;
 }
 
+.header-info-text {
+	width: 44%;
+	margin: 0 auto !important;
+	margin-top: 1.1rem !important;
+}
+
 /* BLAZOR */
 
 
@@ -335,5 +341,9 @@ code {
 
 	.support-text {
 		max-width: 100%;
+	}
+
+	.header-info-text {
+		width: 80% !important;
 	}
 }
