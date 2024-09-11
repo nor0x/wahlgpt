@@ -25,6 +25,7 @@
 			<li>
 				<textarea class="question-input" type="text" placeholder="Deine Frage zum Wahlprogramm?"
 						  @oninput="QuestionChanged" />
+						  <p>Partei(en) auswählen:</p>
 				<ul class="parties-list">
 					@foreach (var party in _parties)
 					{
