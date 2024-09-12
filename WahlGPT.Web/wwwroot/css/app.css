@@ -9,8 +9,8 @@
 }
 
 .welcome-icon {
-	font-size: 3rem;
-	margin-bottom: 12px !important;
+	width: 120px;
+	margin-bottom: -2rem;
 }
 
 .action li {
@@ -244,6 +244,19 @@ span:nth-child(3) {
 	margin-top: 1.1rem !important;
 }
 
+.blazor-loader {
+	display: flex;
+	flex-direction: column;
+	width: 200px;
+	margin: 0 auto;
+	margin-top: 4rem;
+}
+
+.loader-img {
+	width: 200px;
+	height: 200px;
+}
+
 /* BLAZOR */
 
 
@@ -299,7 +312,7 @@ span:nth-child(3) {
 		}
 
 .loading-progress-text {
-	position: absolute;
+	margin-top: -30px;
 	text-align: center;
 	font-weight: bold;
 	inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
