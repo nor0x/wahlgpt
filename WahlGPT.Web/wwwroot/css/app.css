@@ -13,6 +13,34 @@
 	margin-bottom: -2rem;
 }
 
+.top-menu {
+	margin-top: 4rem;
+	margin-bottom: 4rem;
+}
+
+#header {
+	padding-top: 0 !important;
+}
+
+.top-menu ul {
+	list-style: none;
+	display: flex;
+	margin: 0 auto;
+	text-align: center;
+	justify-content: right;
+	margin-right: 4rem;
+	padding: 0;
+	gap: 0.5rem;
+	margin-top: -2rem;
+	margin-bottom: 2rem;
+}
+
+.top-menu li {
+	text-align: center;
+	padding: 0;
+	cursor: pointer;
+}
+
 .action li {
 	width: 100%;
 }
@@ -359,4 +387,18 @@ code {
 	.header-info-text {
 		width: 80% !important;
 	}
+
+	.top-menu ul {
+		list-style: none;
+		display: flex;
+		margin: 0 auto;
+		text-align: center;
+		justify-content: center;
+		margin-right: 0;
+		padding: 0;
+		gap: 0.5rem;
+		margin-top: -2rem;
+		margin-bottom: 2rem;
+	}
+
 }
