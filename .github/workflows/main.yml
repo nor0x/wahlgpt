@@ -33,6 +33,11 @@ jobs:
          (Get-Content -Path WahlGPT.Common/Settings.cs) -replace 'COUNT_ENDPOINT', '${{ secrets.COUNT_ENDPOINT }}' | Set-Content -Path WahlGPT.Common/Settings.cs
          (Get-Content -Path WahlGPT.Common/Settings.cs) -replace 'VERSION_HASH', '${{ github.sha }}' | Set-Content -Path WahlGPT.Common/Settings.cs 
 
+         $commitHash = '${{ github.sha }}'.Substring(0, 7)
+         (Get-Content -Path WahlGPT.Web/wwwroot/index.html) -replace 'js/app.js', "js/app.js?version=$commitHash" | Set-Content -Path WahlGPT.Web/wwwroot/index.html
+         (Get-Content -Path WahlGPT.Web/wwwroot/index.html) -replace 'css/app.css', "css/app.css?version=$commitHash" | Set-Content -Path WahlGPT.Web/wwwroot/index.html
+
+
       - name: auto minify the files
         uses: nizarmah/auto-minify@v3
         with:
