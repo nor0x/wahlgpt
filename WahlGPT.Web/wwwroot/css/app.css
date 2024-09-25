@@ -232,6 +232,21 @@ span:nth-child(3) {
 	display: inline-block;
 }
 
+.seeya-badge {
+	color: white;
+	font-size: 20px;
+	font-weight: 100;
+	transform: rotate(-3deg);
+	animation: none !important;
+	display: inline-block;
+	font-family: cursive;
+	margin-top:5rem;
+}
+
+.seeya-badge span {
+	font-size: 40px;
+}
+
 .selected-party-badge {
 	background-color: #666666;
 	color: #ffffff;
@@ -270,6 +285,18 @@ span:nth-child(3) {
 	width: 44%;
 	margin: 0 auto !important;
 	margin-top: 1.1rem !important;
+}
+
+.done-header-text {
+	margin-top: 1.1rem;
+	max-width: 60%;
+	margin: 0 auto;
+	margin-top: 4rem;
+	text-wrap: balance;
+}
+
+.done-header-text h3 {
+	margin-bottom: 0 !important;
 }
 
 .blazor-loader {
@@ -376,6 +403,11 @@ code {
 		transform: rotate(-9deg);
 	}
 
+
+	.done-header-text {
+		max-width: 96%;
+	}
+
 	.answer-info-text {
 		max-width: 80%;
 	}
@@ -385,7 +417,7 @@ code {
 	}
 
 	.header-info-text {
-		width: 80% !important;
+		width: 96%;
 	}
 
 	.top-menu ul {
