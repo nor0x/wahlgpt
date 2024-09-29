@@ -23,33 +23,18 @@
 			Willkommen zu <strong>WahlGPT</strong>
 			<div class="beta-badge">βeta</div>
 		</h1>
-		<p class="header-info-text">...ein LLM das die Wahlprogramme zur Nationalratswahl 2024 <a href="https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2024/start.aspx#pk_02" target="_blank">aller Parteien</a> gelesen hat und dir Fragen dazu beantwortet.
+		<p class="header-info-text">...ich bin ein LLM das die Wahlprogramme zur Nationalratswahl 2024 <a href="https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2024/start.aspx#pk_02" target="_blank">aller Parteien</a> gelesen hat und dir Fragen dazu beantwortet.
 		</p>
-		<p>
-			bisher wurden <span data-countup> @_answerCount</span> Antworten generiert
-		</p>
+		<div class="done-header-text">
+		<h3>
+			Die Nationalratswahl 2024 ist vorbei!
+			<br />
+			Seit dem Start am 7. September 2024 habe ich insgesamt <span data-countup> @_answerCount</span> Antworten generiert.
+		</h3>
+			<p class="header-info-text">Wenn dir WahlGPT gefallen hat, kannst du mich gerne <a href="https://bento.me/nor0x" target="_blank">unterstützen</a> oder <a href="https://johnnys.news/2024/09/How-I-built-wahlGPT" target="_blank">mehr über das Projekt erfahren</a>.</p>
 
-		<ul class="actions special">
-			<li>
-				<textarea class="question-input" type="text" placeholder="Deine Frage zum Wahlprogramm?"
-						  @oninput="QuestionChanged" />
-						  <p>Partei(en) auswählen:</p>
-				<ul class="parties-list">
-					@foreach (var party in _parties)
-					{
-						@if (party.selected)
-						{
-							<li class="party selected" @onclick="() => SelectParty(party.party)">@party.party</li>
-						}
-						else
-						{
-							<li class="party" @onclick="() => SelectParty(party.party)">@party.party</li>
-						}
-					}
-				</ul>
-				<button class="button primary" @onclick="AskQuestion" disabled="@_buttonDisabled">@_questionButtonText</button>
-			</li>
-		</ul>
+			<div class="seeya-badge"><span>👋</span><br />bis zur nächsten Wahl</div>
+		</div>
 	</div>
 </section>
 
@@ -240,7 +225,6 @@
 	{
 		if(firstRender)
 		{
-			await _js.InvokeVoidAsync("doSuggestions");
 			await Task.Run(async () =>
 			{
 				_answerCount = await _chat.GetCount();
