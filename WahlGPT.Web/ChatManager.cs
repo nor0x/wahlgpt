@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -23,6 +23,7 @@ public class ChatManager
 
 	public async Task<int> GetCount()
 	{
+		return 26237;
 		var lastDate = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "countDate");
 		if (!string.IsNullOrWhiteSpace(lastDate))
 		{
